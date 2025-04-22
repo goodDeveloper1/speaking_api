@@ -1,10 +1,13 @@
 import os
-from data import client
+from data import client, translator
 import json
+
 
 from flask import Flask
 
 app = Flask(__name__)
+
+app.config['DEBUG'] = False
 
 @app.route("/")
 def hello_world():
@@ -17,6 +20,10 @@ def returndata(part):
     with open(f"speaking_{part}_formatted.json", "r", encoding="utf-8") as f:
         data = json.load(f)
         return data, 200
+@app.route("/translate/<source>/<target>/<text>")
+def translate_user(source, target, text):
+    return translator.translate_text(text, source_lang=source, target_lang=target)
+
 
 if __name__ == "__main__":
   app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 3000)))
