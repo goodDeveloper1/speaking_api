@@ -33,6 +33,8 @@ def translate_user():
 def evaluate():
     essay_prompt = request.args.get("essay_prompt")
     essay = request.args.get("essay")
+    if not essay and not essay_prompt:
+        return {"error": "No essay or essay_prompt provided"}, 400
     res = writing_review.aIreview(essay_prompt=essay_prompt, essay=essay)
     return res, 200
 
