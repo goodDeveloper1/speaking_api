@@ -14,7 +14,7 @@ def hello_world():
 
 @app.route("/<part>")
 def returndata(part):
-    with open(f"speaking_{part}.json", "r", encoding="utf-8") as f:
+    with open(f"speaking_{part}_formatted.json", "r", encoding="utf-8") as f:
         data = json.load(f)
         return data, 200
 
