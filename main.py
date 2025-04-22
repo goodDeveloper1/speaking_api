@@ -1,5 +1,5 @@
 import os
-from data import client, translator
+from data import client, translator, writing_review
 import json
 
 
@@ -28,6 +28,13 @@ def translate_user():
     res = {"text": translator.translate_text(source_lang=source, target_lang=target, text=text)}
     return res, 200
 
+
+@app.route("/evaluate")
+def evaluate():
+    essay_prompt = request.args.get("essay_prompt")
+    essay = request.args.get("essay")
+    res = writing_review.aIreview(essay_prompt=essay_prompt, essay=essay)
+    return res, 200
 
 if __name__ == "__main__":
   app.run(debug=True, host="0.0.0.0", port=int(os.environ.get("PORT", 3000)))
